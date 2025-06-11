@@ -2,7 +2,7 @@
 # Rapport de Projet SSN : Shell sur Netcat
 
 ## Auteurs
-Florentin Girardet & [Nom du binôme]  
+Florentin Girardet & [Paul Geniaux]  
 Polytech Dijon, TP Systèmes UNIX
 
 ## Objectif
