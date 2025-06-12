@@ -2,17 +2,17 @@
 
 # Rapport de Projet TP – SSN (Shell sur Netcat)
 
-**Étudiants :** Florentin Girardet & Paul GENIAUX
+**Étudiants :** Florentin GIRARDET & Paul GENIAUX
 **Systèmes UNIX**
 **Date :** 12/06/2025
 
 ### 1\. Objectif du projet
 
-L'objectif du projet est de concevoir un shell distant basé sur Netcat permettant à un client d'envoyer des commandes à un serveur, qui les exécute et retourne les résultats à partir de Bash. Le projet évolue en quatre étapes : écoute simple, exécution distante, authentification, et chiffrement monoalphabétique.
+L’objectif du projet est de concevoir un shell distant basé sur Netcat permettant à un client d’envoyer des commandes à un serveur, qui les exécute et retourne les résultats à partir de Bash. Le projet évolue en quatre étapes : écoute simple, exécution distante, authentification, et chiffrement monoalphabétique.
 
 ### 2\. Détail des exercices
 
-[cite\_start]Pour les 3 premiers exercices, le client est vraiment basique.On lance seulement la commande : `nc localhost 12345`.
+Pour les 3 premiers exercices, le client est vraiment basique. On lance seulement la commande :  `nc localhost 12345`.
 
 #### 2.1. Exercice 1 – Serveur en écoute
 
@@ -28,10 +28,13 @@ Cette fois-ci, on passe par des tunnels FIFO. Pour ce faire, on exécute la comm
 
 #### 2.4. Exercice 4 – Chiffrement monoalphabétique
 
-[cite\_start]Dans cet exercice, nous avons 2 fichiers, un pour le client et l’autre pour le serveur[cite: 1].
+Dans cet exercice nous avons 2 fichiers, un pour le client et l’autre pour le serveur.
 
 **Côté Serveur :**
-[cite\_start]Nous récupérons déjà l’input du client qui contient le mot de passe et la clé du client ainsi que le mot de passe contenu dans le fichier `config`[cite: 12]. [cite\_start]Si les mots de passe sont identiques et que la clé est valide, nous passons à l’étape suivante : On récupère l’entrée client et on la déchiffre puis on l’exécute et on la renvoie chiffrée[cite: 13]. [cite\_start]Pour chiffrer et déchiffrer le message, on utilise le chiffrement monoalphabétique avec : `encode() { echo "$1" | tr 'abcdefghijklmnopqrstuvwxyz' "$cle"}`[cite: 14]. [cite\_start]Et inversement pour décoder[cite: 15]. [cite\_start]Cette fois-ci, on utilise encore des FIFOs mais on les a encodées en tant que sortie de bash pour rendre le code plus lisible[cite: 15]:
+Nous récupérons déjà l’input du client qui contient le mot de passe et la clé du client ainsi que le mot de passe contenu le fichier config.
+Si les mots de passe sont identiques et que la clé est valide, nous passons à l’étape suivante : On récupère l’entrée client et on la déchiffre puis on l’exécute et on la renvoie chiffrés.
+Pour chiffrer déchiffrer le message, on utilise le chiffrement monoalphabétique avec :  `encode() { echo "$1" | tr 'abcdefghijklmnopqrstuvwxyz' "$cle"}`Et inversement pour decoder. 
+Cette fois si, on utilise encore des fifo mais on les as encoder en temps que sortie de bash pour rendre le code plus lisible :
 
 ```bash
 exec 3<> fifo_client_to_server.fifo
@@ -40,11 +43,11 @@ exec 4<> fifo_server_to_client.fifo
 ```
 
 **Côté Client :**
-[cite\_start]Dans un premier temps, nous récupérons le mot de passe de l’utilisateur ainsi que la clé de chiffrement en nous assurant qu’elle soit valable[cite: 17]. [cite\_start]Dès que nous sommes bien connectés au serveur, nous faisons l’interface entre le serveur et le client en récupérant ses prompts et en les envoyant chiffrés au serveur avec les mêmes méthodes que celui-ci[cite: 17]. [cite\_start]Puis on récupère les réponses du serveur, on les déchiffre et on les affiche[cite: 18].
+Dans un premier temps, nous récupérons le mot de passe de l’utilisateur ainsi que la clé de chiffrement en nous assurant qu’elle soit valable. Dès que nous somme bien connecter au serveur on fait l’interface entre le serveur et le client en récupérant ses prompt et en les envoyant chiffré au serveur avec les mêmes méthodes que celui-ci. Puis on récupère les réponses du serveur, on les déchiffre et on les affiche.
 
 ### 3\. Lancement et utilisation des scripts
 
-[cite\_start]Pour lancer les scripts, on commence par s’assurer qu’ils sont exécutables, si ce n’est pas le cas, on réalise : `chmod +x [nom du fichier]`[cite: 19]. [cite\_start]On le fait pour les fichiers `./Client.sh` et/ou `./Serveur.sh`[cite: 20].
+Pour lancer les scripts, on commence par s’assurer qu’ils sont exécutables, si ce n’est pas le cas, on réalise :  `chmod +x [nom du fichier]`On le fait pour les fichiers `./Client.sh` et/ou `./Serveur.sh`.
 
 ### 4\. Annexes
 
