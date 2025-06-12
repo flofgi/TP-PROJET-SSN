@@ -7,56 +7,56 @@ mkfifo ./fifo_server_to_client.fifo
 
 
 encode() {
-  echo "$1" | tr 'abcdefghijklmnopqrstuvwxyz' "$cle"
+echo "$1" | tr 'abcdefghijklmnopqrstuvwxyz' "$cle"
 }
 
 decode() {
-  echo "$1" | tr "$cle" 'abcdefghijklmnopqrstuvwxyz'
+echo "$1" | tr "$cle" 'abcdefghijklmnopqrstuvwxyz'
 }
 
 function interpret() {
-  echo "Start serveur." >&2
+echo "Start serveur." >&2
 
-  exec 3<> fifo_client_to_server.fifo
-  exec 4<> fifo_server_to_client.fifo
+exec 3<> fifo_client_to_server.fifo
+exec 4<> fifo_server_to_client.fifo
 
-  read -r input <&3
-  mdpclient="${input%%|*}"
-  cleclient="${input#*|}"
-  echo -e "$mdpclient|$cleclient"
+read -r input <&3
+mdpclient="${input%%|*}"
+cleclient="${input#*|}"
+echo -e "$mdpclient|$cleclient"
 
-  source config
+source config
 
-  if [ "$mdpclient" = "$mdp" ] && [ $( echo "$cle" | grep -o . | sort | uniq | wc -l ) = 26 ]; then
-    echo -e "mdp=$mdp\ncle=$cleclient" > config
-    echo "Vous etes connecté" >&4
-    source config
-    while read -r line <&3; do
-      # Déchiffrement
-      dec=$(decode "$line")
-      echo "Debug reçu: $dec" >&2
+if [ "$mdpclient" = "$mdp" ] && [ $( echo "$cle" | grep -o . | sort | uniq | wc -l ) = 26 ]; then
+echo -e "mdp=$mdp\ncle=$cleclient" > config
+echo "Vous etes connecté" >&4
+source config
+while read -r line <&3; do
+# Déchiffrement
+dec=$(decode "$line")
+echo "Debug reçu: $dec" >&2
 
-      if [ "$dec" = "exit" ]; then
-        echo "Bye bye" | encode >&4
-        break
-      fi
+if [ "$dec" = "exit" ]; then
+echo "Bye bye" | encode >&4
+break
+fi
 
-      
-      output=$($dec)
 
-  while IFS= read -r out_line; do
-    encode "$out_line" >&4
-  done <<< "$output"
+output=$($dec)
 
-  encode "FIN" >&4
+while IFS= read -r out_line; do
+encode "$out_line" >&4
+done <<< "$output"
 
-    done
+encode "FIN" >&4
 
-  else
-    echo "Echec de la connection" >&4
-  fi
+done
 
-  echo "End serveur." >&2
+else
+echo "Echec de la connection" >&4
+fi
+
+echo "End serveur." >&2
 }
 
 exec 3<> fifo_client_to_server.fifo
