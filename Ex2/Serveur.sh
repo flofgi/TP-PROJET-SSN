@@ -3,6 +3,7 @@ mkfifo ./fifo
 
 function interpret (){
   date
+  echo "Bienvenue sur le serveur"
   while read line;
   do
     echo "Debug, received == $line ==" >&2
