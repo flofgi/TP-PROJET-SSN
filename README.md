@@ -8,19 +8,19 @@
 
 ### 1\. Objectif du projet
 
-[cite\_start]L'objectif du projet est de concevoir un shell distant basé sur Netcat permettant à un client d'envoyer des commandes à un serveur, qui les exécute et retourne les résultats à partir de Bash[cite: 2]. [cite\_start]Le projet évolue en quatre étapes : écoute simple, exécution distante, authentification, et chiffrement monoalphabétique[cite: 3].
+L'objectif du projet est de concevoir un shell distant basé sur Netcat permettant à un client d'envoyer des commandes à un serveur, qui les exécute et retourne les résultats à partir de Bash. Le projet évolue en quatre étapes : écoute simple, exécution distante, authentification, et chiffrement monoalphabétique.
 
 ### 2\. Détail des exercices
 
-[cite\_start]Pour les 3 premiers exercices, le client est vraiment basique[cite: 4]. [cite\_start]On lance seulement la commande : `nc localhost 12345`[cite: 5].
+[cite\_start]Pour les 3 premiers exercices, le client est vraiment basique.On lance seulement la commande : `nc localhost 12345`.
 
 #### 2.1. Exercice 1 – Serveur en écoute
 
-[cite\_start]Pour réaliser cet exercice, nous envoyons à la commande Netcat `date` et le message "Bienvenue sur le serveur"[cite: 6]. [cite\_start]Nous exécutons Netcat avec `nc -l -s localhost -p 12345` ce qui indique que l’on est en mode écoute et que l’on se concentre sur la machine sur le port 12345[cite: 6].
+Pour réaliser cet exercice, nous envoyons à la commande Netcat `date` et le message "Bienvenue sur le serveur". Nous exécutons Netcat avec `nc -l -s localhost -p 12345` ce qui indique que l’on est en mode écoute et que l’on se concentre sur la machine sur le port 12345.
 
 #### 2.2. Exercice 2 – Exécution distante de commandes
 
-[cite\_start]Cette fois-ci, on passe par des tunnels FIFO[cite: 7]. [cite\_start]Pour ce faire, on exécute la commande `nc -l -s localhost -p 12345 < ./fifo | interpret > ./fifo`[cite: 7]. [cite\_start]Ce qui permet de communiquer sans arrêt entre `nc` et notre fonction[cite: 8]. [cite\_start]Celle-ci va afficher la saisie du client, si la saisie est « exit », la fonction va s’arrêter[cite: 9]. [cite\_start]Sinon elle va exécuter et retourner le résultat au client[cite: 10].
+Cette fois-ci, on passe par des tunnels FIFO. Pour ce faire, on exécute la commande `nc -l -s localhost -p 12345 < ./fifo | interpret > ./fifo`. Ce qui permet de communiquer sans arrêt entre `nc` et notre fonction. Celle-ci va afficher la saisie du client, si la saisie est « exit », la fonction va s’arrêter. Sinon elle va exécuter et retourner le résultat au client.
 
 #### 2.3. Exercice 3 – Authentification par mot de passe
 
