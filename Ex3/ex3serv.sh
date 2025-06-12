@@ -3,6 +3,7 @@ mkfifo ./fifo
 
 function interpret (){
   date
+  echo "Bienvenue sur le serveur"
   echo "entrer le mot de passe"
   while read line;
   do
