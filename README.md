@@ -39,7 +39,7 @@ Cette fois si, on utilise encore des fifo mais on les as encoder en temps que so
 ```bash
 exec 3<> fifo_client_to_server.fifo
 exec 4<> fifo_server_to_client.fifo
-[cite_start]nc -l -p 12345 >&3 <&4 | interpret
+nc -l -p 12345 >&3 <&4 | interpret
 ```
 
 **Côté Client :**
