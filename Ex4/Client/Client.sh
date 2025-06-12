@@ -51,7 +51,5 @@ function interpret() {
   fi
 }
 
-exec 3<> fifo_client_to_server.fifo
-exec 4<> fifo_server_to_client.fifo
 
 nc localhost 12345 < ./fifo_client_to_server.fifo > ./fifo_server_to_client.fifo | interpret
